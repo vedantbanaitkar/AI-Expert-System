@@ -2,14 +2,23 @@
 import React from "react";
 
 const BookCard = ({ title, author, genres, thumbnail, pageCount, ratingsCount, averageRating, link }) => {
+  const handleCardClick = () => {
+    const searchQuery = encodeURIComponent(title);
+    const amazonSearchUrl = `https://www.amazon.in/s?k=${searchQuery}`;
+    window.open(amazonSearchUrl, "_blank");
+  };
+
   return (
-    <div className="border rounded p-4 shadow-md w-60 h-[420px] flex flex-col justify-between cursor-pointer hover:shadow-md hover:shadow-gray-500 transition ease-in-out duration-500">
-      <h3 className="text-lg font-semibold">{title}</h3>
+    <div
+      className="border rounded-lg p-4 shadow-md w-60 h-[560px] flex flex-col justify-between cursor-pointer hover:shadow-md hover:shadow-gray-500 transition ease-in-out duration-500"
+      onClick={handleCardClick} // Open Amazon search URL on click
+    >
       <img
-        className="w-24 mx-auto border-[1px] border-black my-3 h-36"
+        className="w-36 mx-auto border-[1px] rounded-lg  my-3 h-56"
         src={thumbnail}
         alt="cover photo"
       />
+      <h3 className=" mx-auto text-lg font-semibold">{title}</h3>
       <div className="text-left">
         <p className="pl-4">
           {" "}
@@ -33,18 +42,17 @@ const BookCard = ({ title, author, genres, thumbnail, pageCount, ratingsCount, a
           {" "}
           <span className="font-semibold">Average Rating:</span> {averageRating}
         </p>
-        <p className="pl-4 text-center mt-3 px-3">
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline mx"
+        <div className="flex justify-center my-4 ">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(link, "_blank");
+            }}
+            className="text-white mx-auto hover:text-black hover:bg-slate-200"
           >
             Preview Book
-          </a>
-        </p>
-
-        {/* Add any other book details you want to display */}
+          </button>
+        </div>
       </div>
     </div>
   );

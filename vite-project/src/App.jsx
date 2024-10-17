@@ -38,6 +38,7 @@ function App() {
     "politics",
     "science",
     "AI",
+    "tragic",
     "technology",
     "it",
     "internet",
@@ -82,6 +83,7 @@ function App() {
 
       const data = await response.json();
       setBooks(data.topBooks);
+  
     } catch (error) {
       console.error("Failed to fetch books:", error);
       triggerToast("Failed to fetch books.");
@@ -90,7 +92,6 @@ function App() {
     }
   };
 
-  // Add genre/mood to the list
   // Add genre/mood to the list
   const addGenre = () => {
     const genreToAdd = inputValue.trim().toLowerCase(); // Trim and lowercase for uniformity

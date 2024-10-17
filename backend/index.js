@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Endpoint to fetch books based on genres
+// Endpoint to fetch books based on genres
 app.post("/search-books", async (req, res) => {
   const { genres } = req.body;
   console.log("Received genres:", genres);
@@ -23,11 +24,12 @@ app.post("/search-books", async (req, res) => {
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
   try {
+    // Create promises for all genres
     const requests = genres.map((genre) => {
       return axios.get(baseUrl, {
         params: {
           q: `subject:${encodeURIComponent(genre)}`, // Search query for each genre
-          maxResults: 12, // Specify the maximum number of results to return
+          maxResults: 12, // Specify the maximum number of results to return for each genre
           key: apiKey, // Include your API key
         },
       });
@@ -40,7 +42,7 @@ app.post("/search-books", async (req, res) => {
     // Collect all books from responses
     responses.forEach((response) => {
       if (response.data.items) {
-        books.push(...response.data.items);
+        books.push(...response.data.items); // Merge results for all genres
       }
     });
 
@@ -57,15 +59,10 @@ app.post("/search-books", async (req, res) => {
     }));
 
     // Sort books by averageRating (descending), putting books without a rating (averageRating 0) at the end
-    const sortedBooks = topBooks.sort((a, b) => {
-      // If both books have an average rating, compare them
-      if (a.averageRating && b.averageRating) {
-        return b.averageRating - a.averageRating; // Higher rating first
-      }
-      // If one of the books has no rating, it goes to the end
-      if (!a.averageRating) return 1;
-      if (!b.averageRating) return -1;
-    });
+    const sortedBooks = topBooks.sort(
+      (a, b) => b.averageRating - a.averageRating
+    );
+
 
     // Return only the top 12 sorted books
     return res.json({
