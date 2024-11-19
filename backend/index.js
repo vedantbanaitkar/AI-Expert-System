@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 // Endpoint to fetch books based on genres
-// Endpoint to fetch books based on genres
 app.post("/search-books", async (req, res) => {
   const { genres } = req.body;
   console.log("Received genres:", genres);
@@ -29,8 +28,8 @@ app.post("/search-books", async (req, res) => {
       return axios.get(baseUrl, {
         params: {
           q: `subject:${encodeURIComponent(genre)}`, // Search query for each genre
-          maxResults: 12, // Specify the maximum number of results to return for each genre
-          key: apiKey, // Include your API key
+          maxResults: 12, 
+          key: apiKey, 
         },
       });
     });

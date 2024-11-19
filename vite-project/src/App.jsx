@@ -46,6 +46,8 @@ function App() {
     "story",
     "literature",
     "novel",
+    "Atomic-Habits",
+    "Dale"
   ]; // Add more as needed
 
   // Handle input changes
